@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
-# $File: //member/autrijus/Class-PseudoHash/test.pl $ $Author: autrijus $
-# $Revision: #3 $ $Change: 2347 $ $DateTime: 2001/11/12 17:08:45 $
+# $File: //member/autrijus/Class-PseudoHash/t/PesudoHash.t $ $Author: autrijus $
+# $Revision: #1 $ $Change: 1 $ $DateTime: 2002/06/11 08:35:12 $
 
 use strict;
 use Test::More tests => 9;

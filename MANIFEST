@@ -3,4 +3,4 @@ MANIFEST
 Makefile.PL
 PseudoHash.pm
 README
-test.pl
+t/PseudoHash.t

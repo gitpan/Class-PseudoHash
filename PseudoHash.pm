@@ -1,10 +1,10 @@
 # $File: //member/autrijus/Class-PseudoHash/PseudoHash.pm $ $Author: autrijus $
-# $Revision: #4 $ $Change: 2351 $ $DateTime: 2001/11/13 15:06:49 $
+# $Revision: #1 $ $Change: 1 $ $DateTime: 2002/06/11 08:35:12 $
 
 package Class::PseudoHash;
 use 5.005;
 
-$Class::PseudoHash::VERSION = '1.00';
+$Class::PseudoHash::VERSION = '1.01';
 
 use strict;
 use vars qw/$FixedKeys $Obj $Proxy/;
@@ -27,6 +27,11 @@ use overload (
 
 Class::PseudoHash - Emulates Pseudo-Hash behaviour via overload
 
+=head1 VERSION
+
+This document describes version 1.01 of Class::PseudoHash, released
+June 20, 2002
+
 =head1 SYNOPSIS
 
     use Class::PseudoHash;
@@ -38,25 +43,25 @@ Class::PseudoHash - Emulates Pseudo-Hash behaviour via overload
 =head1 DESCRIPTION
 
 Due to its impact on overall performance of ordinary hashes, pseudo-hashes
-are deprecated in perl v5.8, and will cease to exist in perl v5.10. By then,
+are deprecated in perl v5.8, and will cease to exist in perl v5.10.  By then,
 the C<fields> pragma is supposed to change to use a different implementation.
 
 Although L<perlref/Pseudo-hashes: Using an array as a hash> recommends
-against using the first-element-as-index behaviour, there are undoubtly
-many brave souls still writing such code, and fearing that the elimination
-of pseudo-hashes will require a massive rewrite of their programs.
+against depending on the underlying implementation (i.e. using the first
+array element as hash indice), there are undoubtly many brave souls still
+writing such code, and fearing that the elimination of pseudo-hashes will
+require a massive rewrite of their programs.
 
 As one of the primary victims, I tried to devise a drop-in solution that 
 could emulate exactly the same semantic of pseudo-hashes, thus keeping 
-all my legacy code intact. So C<Class::PseudoHash> was born.
+all my legacy code intact.  So C<Class::PseudoHash> was born.
 
-Hence, if you're using the preferred C<fields::phash()> function, just 
-write:
+Hence, if your code use the preferred C<fields::phash()> function, just write:
 
     use fields;
     use Class::PseudoHash;
 
-then everything will work like before. If you are creating pseudo-hashes 
+then everything will work like before.  If you are creating pseudo-hashes 
 by hand (C<[{}]> anyone?), just write this:
 
     $ref = Class::PseudoHash->new;
@@ -67,11 +72,11 @@ and use the returned object in whatever way you like.
 
 If you set C<$Class::PseudoHash::FixedKeys> to a false value and tries
 to access a non-existent hash key, then a new pseudo-hash entry will be
-created silently. This is most useful if you're already using untyped
+created silently.  This is most useful if you're already using untyped
 pseudo-hashes, and don't want the compile-time checking feature.
 
 Compile-time validating of keys is not possible with this module, for
-obvious reasons. Also, the performance will not be as fast as typed
+obvious reasons.  Also, the performance will not be as fast as typed
 pseudo-hashes (but generally faster than untyped ones).
 
 =cut
@@ -182,7 +187,7 @@ Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2001 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
+Copyright 2001, 2002 by Autrijus Tang E<lt>autrijus@autrijus.orgE<gt>.
 
 This program is free software; you can redistribute it and/or 
 modify it under the same terms as Perl itself.

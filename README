@@ -1,5 +1,5 @@
 # $File: //member/autrijus/Class-PseudoHash/README $ $Author: autrijus $
-# $Revision: #3 $ $Change: 2351 $ $DateTime: 2001/11/13 15:06:49 $
+# $Revision: #1 $ $Change: 1 $ $DateTime: 2002/06/11 08:35:12 $
 
 This is the README file for Class::PseudoHash, a module to
 emulate pseudo-hash behaviour via overload.
@@ -15,7 +15,7 @@ make install
 
 * Copyright
 
-Copyright 2001 by Autrijus Tang <autrijus@autrijus.org>,
+Copyright 2001, 2002 by Autrijus Tang <autrijus@autrijus.org>,
 
 All rights reserved.  You can redistribute and/or modify
 this bundle under the same terms as Perl itself.
@@ -24,19 +24,18 @@ See <http://www.perl.com/perl/misc/Artistic.html>.
 
 * Introduction
 
-Due to its impact on overall performance of ordinary hashes,
-pseudo-hashes are deprecated in perl v5.8, and will cease to exist in
-perl v5.10. By then, the "fields" pragma is supposed to change to use a
-different implementation.
+Due to its impact on overall performance of ordinary hashes, pseudo-hashes
+are deprecated in perl v5.8, and will cease to exist in perl v5.10.  By then,
+the 'fields' pragma is supposed to change to use a different implementation.
 
-Although the Pseudo-hashes: Using an array as a hash entry in the
-perlref manpage recommends against using the first-element-as-index
-behaviour, there are undoubtly many brave souls still writing such code,
-and fearing that the elimination of pseudo-hashes will require a massive
-rewrite of their programs.
+Although 'perlref/Pseudo-hashes: Using an array as a hash' recommends
+against depending on the underlying implementation (i.e. using the first
+array element as hash indice), there are undoubtly many brave souls still
+writing such code, and fearing that the elimination of pseudo-hashes will
+require a massive rewrite of their programs.
 
-As one of the primary victims, I tried to devise a drop-in solution that
-could emulate exactly the same semantic of pseudo-hashes, thus keeping
-all my legacy code intact. So "Class::PseudoHash" was born.
+As one of the primary victims, I tried to devise a drop-in solution that 
+could emulate exactly the same semantic of pseudo-hashes, thus keeping 
+all my legacy code intact.  So 'Class::PseudoHash' was born.
 
-Please refer to the POD text for synopsis and details on usage.
+Please refer to the POD text for synopsis and usage details.
