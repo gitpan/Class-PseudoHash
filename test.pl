@@ -1,24 +1,39 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
 # $File: //member/autrijus/Class-PseudoHash/test.pl $ $Author: autrijus $
-# $Revision: #1 $ $Change: 1495 $ $DateTime: 2001/08/01 19:13:52 $
+# $Revision: #2 $ $Change: 1675 $ $DateTime: 2001/09/03 20:39:12 $
 
-use Test::Simple tests => 6;
-use Class::PseudoHash;
+use strict;
+use Test::More tests => 9;
 
-my @arg = ([qw/hello hay hoo aiph/], [1..10]);
-$h = Class::PseudoHash->new(@arg);
+my ($class, $phash);
 
-ok((defined($h) and ref $h eq 'Class::PseudoHash'), 'new() works');
+BEGIN {
+    use_ok($class = 'Class::PseudoHash');
+}
 
-$h = fields::phash(@arg);
+my @keys = qw/hello hay hoo aiph/;
+my @arg = ([@keys], [1..10]);
+$phash = $class->new(@arg);
 
-ok((defined($h) and ref $h eq 'Class::PseudoHash'), 'fields::phash() works');
+isa_ok($phash, $class);
 
-$h->{hello} = 'hi';
-$h->{hay} = 'hay';
+$phash = fields::phash(@arg);
 
-ok($h->[1] eq 'hi', 'array access works');
-ok($h->{aiph} eq '4', 'hash access works');
-ok(keys %$h eq '4', 'keys works');
-ok($#{$h} eq '4', 'fetchsize works');
+isa_ok($phash, $class);
 
+$phash->{hello} = 'hi';
+$phash->{hay} = 'hay';
+
+is($phash->[1],		'hi',	'array access');
+is($phash->{aiph},	4,	'hash access');
+eq_set([keys(%$phash)],	\@keys,	'keys()');
+is($#{$phash},		4,	'fetchsize');
+like("$phash",		qr/^$class=ARRAY\(0x[0-9a-f]+\)$/ , 'stringification');
+is($phash ? 1 : 0,	1,	'bool context');
+
+TODO: {
+    local $TODO = '"0+" overloading broken';
+    is(eval{0+$phash},	0,	'numeric context');
+}
+
+__END__

@@ -1,3 +1,14 @@
 ____________________________________________________________________________
+[  1677] By: autrijus@autribsd                     on 2001/09/03 20:41:22
+	Log: * this be Class::PseudoHash v0.02.
+____________________________________________________________________________
+[  1675] By: autrijus@autribsd                     on 2001/09/03 20:39:12
+	Log: * fixed stringification bug in 5.005
+	     * minor POD tweaks
+	     * uses Test::More for test now. thanks schwern!
+____________________________________________________________________________
+[  1496] By: autrijus@autribsd                     on 2001/08/01 19:19:18
+	Log: * revised Makefile and Changes
+____________________________________________________________________________
 [  1495] By: autrijus@autribsd                     on 2001/08/01 19:13:52
 	Log: * The Class::PseudoHash module, v0.01.

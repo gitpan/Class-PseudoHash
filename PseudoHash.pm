@@ -1,10 +1,10 @@
 # $File: //member/autrijus/Class-PseudoHash/PseudoHash.pm $ $Author: autrijus $
-# $Revision: #1 $ $Change: 1495 $ $DateTime: 2001/08/01 19:13:52 $
+# $Revision: #2 $ $Change: 1675 $ $DateTime: 2001/09/03 20:39:12 $
 
 package Class::PseudoHash;
 require 5.005;
 
-$Class::PseudoHash::VERSION = '0.01';
+$Class::PseudoHash::VERSION = '0.02';
 
 use strict;
 
@@ -24,12 +24,12 @@ Class::PseudoHash - Emulates Pseudo-Hash behaviour via overload
 
 Due to its impact on overall performance of ordinary hashes, pseudo-hashes
 are deprecated in perl v5.8, and will cease to exist in perl v5.10. The 
-C<fields> pragma will change to use a different implementation.
+C<fields> pragma is supposed to change to use a different implementation.
 
 Although L<perlref/Pseudo-hashes: Using an array as a hash> recommends
-against using the first-element-as-index behaviour, it's doubtless that
-many brave souls still wrote codes that utilized it, and fears that the
-elimination of pseudo-hashes will require a massive rewrite of their code.
+against using the first-element-as-index behaviour, certainly there are
+many brave souls still writing such codes, and fear that the elimination
+of pseudo-hashes will require a massive rewrite of their programs.
 
 As one of the primary victims, I tried to find a drop-in solution that 
 could emulate exactly the same semantic of pseudo-hashes, thus keeping 
@@ -51,7 +51,7 @@ and use the returned object in whatever way you like.
 =head1 NOTES
 
 If you set C<$Class::PseudoHash::FixedKeys> to a false value and tries
-to access a nonexistent hash key, then a new pseudohash entry will be
+to access a non-existent hash key, then a new pseudo-hash entry will be
 created silently. This is most useful if you're already using untyped
 pseudo-hashes, and don't want the compile-time checking feature.
 
@@ -59,11 +59,10 @@ pseudo-hashes, and don't want the compile-time checking feature.
 
 Compile-type validating of keys is not possible with this module,
 for obvious reasons. Also, the performance will not be as fast as
-typed pseudohashes (but generally faster than untyped ones).
+typed pseudo-hashes (but generally faster than untyped ones).
 
-Perl versions prior to v5.6.0 has a bug that prevents proper
-overloading for stringification, so a placeholder of 
-C<Class::PseudoHash=ARRAY(0xbadfeed)> is always used.
+The numeric context overloading (C<0+>) is broken, and i don't have the
+time to track it down.
 
 =cut
 
@@ -76,9 +75,12 @@ $FixedKeys = 1;
 my ($obj, $proxy);
 
 use overload (
-    '%{}' => sub { $$obj = $_[0]; return $proxy },
-    '""'  => $] >= 5.006 ? sub { $_[0] }
-                         : sub { ref($_[0]).'=ARRAY(0xbadfeed)' } # bug
+    '%{}'  => sub { $$obj = $_[0]; return $proxy },
+    '""'   => sub { overload::AddrRef($_[0]) },
+    '0+'   => sub { 0 },
+    'bool' => sub { 1 },
+    'cmp'  => sub { "$_[0]" cmp "$_[1]" },
+    '<=>'  => sub { "$_[0]" cmp "$_[1]" }, # for completeness' sake
 );
 
 sub import {
