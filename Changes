@@ -1,4 +1,21 @@
 ____________________________________________________________________________
+[  2351] By: autrijus@autribsd                     on 2001/11/13 15:06:49
+	Log: * This be v1.0 of Class::PseudoHash
+	     * POD nitpick and corrections
+	     * RCS to README
+	     * fixed CLEAR bug
+____________________________________________________________________________
+[  2349] By: autrijus@autribsd                     on 2001/11/13 03:59:02
+	Log: * upgrade to ExtUtils::AutoInstall to work around the Test::*
+	     condition
+____________________________________________________________________________
+[  2347] By: autrijus@autribsd                     on 2001/11/12 17:08:45
+	Log: * pod nits
+	     * fixes numerical overloading
+____________________________________________________________________________
+[  1678] By: autrijus@autribsd                     on 2001/09/03 20:41:57
+	Log: * update Changes
+____________________________________________________________________________
 [  1677] By: autrijus@autribsd                     on 2001/09/03 20:41:22
 	Log: * this be Class::PseudoHash v0.02.
 ____________________________________________________________________________

@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # $File: //member/autrijus/Class-PseudoHash/test.pl $ $Author: autrijus $
-# $Revision: #2 $ $Change: 1675 $ $DateTime: 2001/09/03 20:39:12 $
+# $Revision: #3 $ $Change: 2347 $ $DateTime: 2001/11/12 17:08:45 $
 
 use strict;
 use Test::More tests => 9;
@@ -15,11 +15,11 @@ my @keys = qw/hello hay hoo aiph/;
 my @arg = ([@keys], [1..10]);
 $phash = $class->new(@arg);
 
-isa_ok($phash, $class);
+isa_ok($phash, $class, 'new()');
 
 $phash = fields::phash(@arg);
 
-isa_ok($phash, $class);
+isa_ok($phash, $class, 'phash()');
 
 $phash->{hello} = 'hi';
 $phash->{hay} = 'hay';
@@ -30,10 +30,6 @@ eq_set([keys(%$phash)],	\@keys,	'keys()');
 is($#{$phash},		4,	'fetchsize');
 like("$phash",		qr/^$class=ARRAY\(0x[0-9a-f]+\)$/ , 'stringification');
 is($phash ? 1 : 0,	1,	'bool context');
-
-TODO: {
-    local $TODO = '"0+" overloading broken';
-    is(eval{0+$phash},	0,	'numeric context');
-}
+isnt(10+$phash,		10,	'numeric context');
 
 __END__

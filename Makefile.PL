@@ -1,10 +1,22 @@
 #!/usr/bin/perl
 # $File: //member/autrijus/Class-PseudoHash/Makefile.PL $ $Author: autrijus $
-# $Revision: #3 $ $Change: 1677 $ $DateTime: 2001/09/03 20:41:22 $
+# $Revision: #4 $ $Change: 2349 $ $DateTime: 2001/11/13 03:59:02 $
 
-require 5.005;
+use 5.005;
+use strict;
 
-use ExtUtils::MakeMaker;
+# ExtUtils::AutoInstall Bootstrap Code, version 1.
+BEGIN { my $p='ExtUtils::AutoInstall'; eval"use $p 0.21;1" or(print
+	"*** Fetching $p.\n"), require CPAN, CPAN::install $p; eval
+	"use $p 0.21;1" or die "*** Please install $p manually.\n"}
+
+use ExtUtils::AutoInstall (
+    -version		=> '0.21',
+    -core		=> [
+        'Test::Harness'	=> '1.23',
+        'Test::More'	=> '0.31',	# tests
+    ],
+);
 
 WriteMakefile(
     AUTHOR		=> 'Autrijus Tang (autrijus@autrijus.org)',
@@ -14,13 +26,8 @@ WriteMakefile(
     DISTNAME		=> 'Class-PseudoHash',
     BINARY_LOCATION	=> 'x86/Class-PseudoHash.tar.gz',
 
-    PREREQ_PM		=> {
-	'Test::More'	=> '0.11',
-    },
-
     dist		=> {
         COMPRESS	=> 'gzip',
         SUFFIX		=> '.gz',
     },
 );
-
