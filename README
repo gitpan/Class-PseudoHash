@@ -1,41 +1,86 @@
-# $File: //member/autrijus/Class-PseudoHash/README $ $Author: autrijus $
-# $Revision: #1 $ $Change: 1 $ $DateTime: 2002/06/11 08:35:12 $
+NAME
+    Class::PseudoHash - Emulates Pseudo-Hash behaviour via overload
 
-This is the README file for Class::PseudoHash, a module to
-emulate pseudo-hash behaviour via overload.
+VERSION
+    This document describes version 1.10 of Class::PseudoHash, released
+    October 14, 2007.
 
-* Installation
+SYNOPSIS
+        use Class::PseudoHash;
 
-Class::PseudoHash uses the standard perl module install process:
+        my @args = ([qw/key1 key2 key3 key4/], [1..10]);
+        my $ref1 = fields::phash(@args);            # phash() override
+        my $ref2 = Class::PseudoHash->new(@args);   # constructor syntax
 
-perl Makefile.PL
-make
-make test
-make install
+DESCRIPTION
+    Due to its impact on overall performance of ordinary hashes,
+    pseudo-hashes are deprecated in Perl 5.8.
 
-* Copyright
+    As of Perl 5.10, pseudo-hashes have been removed from Perl, replaced by
+    restricted hashes provided by Hash::Util. Additionally, Perl 5.10 no
+    longer supports the "fields::phash()" API.
 
-Copyright 2001, 2002 by Autrijus Tang <autrijus@autrijus.org>,
+    Although "Pseudo-hashes: Using an array as a hash" in perlref recommends
+    against depending on the underlying implementation (i.e. using the first
+    array element as hash indice), there are undoubtly many legacy codebase
+    still depending on pseudohashes; elimination of pseudo-hashes would
+    therefore require a massive rewrite of their programs.
 
-All rights reserved.  You can redistribute and/or modify
-this bundle under the same terms as Perl itself.
+    Back in 2002, as one of the primary victims, I tried to devise a drop-in
+    solution that could emulate exactly the same semantic of pseudo-hashes,
+    thus keeping all my legacy code intact. So "Class::PseudoHash" was born.
 
-See <http://www.perl.com/perl/misc/Artistic.html>.
+    Hence, if your code use the preferred "fields::phash()" function, just
+    write:
 
-* Introduction
+        use fields;
+        use Class::PseudoHash;
 
-Due to its impact on overall performance of ordinary hashes, pseudo-hashes
-are deprecated in perl v5.8, and will cease to exist in perl v5.10.  By then,
-the 'fields' pragma is supposed to change to use a different implementation.
+    then everything will work like before. If you are creating pseudo-hashes
+    by hand ("[{}]" anyone?), just write this instead:
 
-Although 'perlref/Pseudo-hashes: Using an array as a hash' recommends
-against depending on the underlying implementation (i.e. using the first
-array element as hash indice), there are undoubtly many brave souls still
-writing such code, and fearing that the elimination of pseudo-hashes will
-require a massive rewrite of their programs.
+        $ref = Class::PseudoHash->new;
 
-As one of the primary victims, I tried to devise a drop-in solution that 
-could emulate exactly the same semantic of pseudo-hashes, thus keeping 
-all my legacy code intact.  So 'Class::PseudoHash' was born.
+    and use the returned object in whatever way you like.
 
-Please refer to the POD text for synopsis and usage details.
+NOTES
+    If you set $Class::PseudoHash::FixedKeys to a false value and tries to
+    access a non-existent hash key, then a new pseudo-hash entry will be
+    created silently. This is most useful if you're already using untyped
+    pseudo-hashes, and don't want the compile-time checking feature.
+
+    Compile-time validating of keys is not possible with this module, for
+    obvious reasons. Also, the performance will not be as fast as typed
+    pseudo-hashes (but generally faster than untyped ones).
+
+SEE ALSO
+    fields, "Pseudo-hashes: Using an array as a hash" in perlref
+
+AUTHORS
+    Audrey Tang <cpan@audreyt.org>
+
+COPYRIGHT
+    Copyright 2001, 2002, 2007 by Audrey Tang <cpan@audreyt.org>.
+
+    This software is released under the MIT license cited below.
+
+  The "MIT" License
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
